@@ -1,0 +1,51 @@
+import React from 'react';
+import './Product.css';
+import star from './star.png';
+import { useStateValue } from '../StateProvider/StateProvider';
+
+function Product({ id, title, price, rating, image }) {
+    const [{}, dispatch] = useStateValue();
+
+    const addToCart = () => {
+        // add item to cart
+        dispatch({
+            type: 'ADD_TO_CART',
+            item: {
+                id: id,
+                title: title,
+                price: price,
+                image: image,
+                rating: rating
+            }
+        })
+    }
+
+    return (
+        <div className = "product">
+            <div className = "product__info">
+                <p>{title}</p>
+                <p className="product__price">
+                    <small>₹</small>
+                    <strong>{price}</strong>
+                </p>
+                <div className="product__rating">
+                    {
+                        Array(rating)
+                            .fill()
+                            .map((_) => (
+                                <img src={star} alt="" className="star" />
+                            ))
+                    }
+                </div>
+            </div>
+            <img src = {image} alt = ""/>
+            <button onClick = {addToCart}>Add to cart</button>
+        </div> 
+    )
+}
+
+export default Product
+
+
+// ☆
+// ⭐
